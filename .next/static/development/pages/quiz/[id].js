@@ -61989,7 +61989,8 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement;
 
 
 
-
+ // import dataJSON from '../../data.json';
+// import resultsJSON from '../../results.json';
 
 Array.prototype.shuffle = function () {
   var i = this.length,
@@ -62009,7 +62010,9 @@ Array.prototype.shuffle = function () {
 
 var Quiz = function Quiz(_ref) {
   var data = _ref.data,
-      results = _ref.results;
+      results = _ref.results,
+      color = _ref.color,
+      title = _ref.title;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(0),
       currentQuestion = _useState[0],
@@ -62063,12 +62066,12 @@ var Quiz = function Quiz(_ref) {
     rel: "stylesheet",
     href: "/pages/quiz/styles.css"
   })), __jsx(_styles__WEBPACK_IMPORTED_MODULE_7__["Background"], {
-    color: "#456"
+    color: color
   }, __jsx(_styles__WEBPACK_IMPORTED_MODULE_7__["Card"], {
     className: "card"
   }, __jsx(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["CardContent"], null, __jsx(_styles__WEBPACK_IMPORTED_MODULE_7__["CardTitle"], {
     gutterBottom: true
-  }, "Que tipo de empreendedor \xE9 voc\xEA durante a crise?"), __jsx("hr", null), __jsx("p", {
+  }, title), __jsx("hr", null), __jsx("p", {
     id: "question"
   }), __jsx("form", {
     id: "answers",

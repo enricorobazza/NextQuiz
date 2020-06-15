@@ -23,8 +23,10 @@ import {
   CardActions,
   QuestionTitle,
 } from './styles';
-import dataJSON from '../../data.json';
-import resultsJSON from '../../results.json';
+// import dataJSON from '../../data.json';
+// import resultsJSON from '../../results.json';
+
+import quizRepository from '../../repository/quiz/quizRepository';
 
 Array.prototype.shuffle = function () {
   var i = this.length,
@@ -40,7 +42,7 @@ Array.prototype.shuffle = function () {
   return this;
 };
 
-const Quiz = ({ data, results }) => {
+const Quiz = ({ data, results, color, title }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [value, setValue] = useState(-1);
   const [answers, setAnswers] = useState([]);
@@ -83,12 +85,10 @@ const Quiz = ({ data, results }) => {
       <Head>
         <link rel="stylesheet" href="/pages/quiz/styles.css" />
       </Head>
-      <Background color="#456">
+      <Background color={color}>
         <Card className="card">
           <CardContent>
-            <CardTitle gutterBottom>
-              Que tipo de empreendedor é você durante a crise?
-            </CardTitle>
+            <CardTitle gutterBottom>{title}</CardTitle>
             <hr />
             <p id="question"></p>
             <form id="answers" action="#"></form>
@@ -154,16 +154,27 @@ const Quiz = ({ data, results }) => {
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
-  console.log(id);
+  const quiz = await quizRepository.getQuiz(id);
+  if (!quiz) {
+    console.log('Quiz não existe!!!');
+    return {
+      props: { data: {}, results: {} },
+    };
+  }
 
-  let shuffledData = [...dataJSON];
+  let shuffledData = [...quiz.questions];
   shuffledData.map((question) => {
     let shuffledQuestion = { ...question };
     shuffledQuestion.answers = shuffledQuestion.answers.shuffle();
     return shuffledQuestion;
   });
   return {
-    props: { data: shuffledData, results: resultsJSON },
+    props: {
+      data: shuffledData,
+      color: quiz.color,
+      results: quiz.results,
+      title: quiz.title,
+    },
   };
 }
 
