@@ -95,7 +95,7 @@ const Quiz = ({ data, results, color, title }) => {
           </CardContent>
           <CardActions>
             {result && <div dangerouslySetInnerHTML={{ __html: result }}></div>}
-            {!result && data && (
+            {!result && data && data.length > 0 && (
               <form action="#">
                 <QuestionTitle>{data[currentQuestion].question}</QuestionTitle>
                 <FormControl component="fieldset">
@@ -153,12 +153,14 @@ const Quiz = ({ data, results, color, title }) => {
 };
 
 export async function getServerSideProps(context) {
-  const { id } = context.query;
-  const quiz = await quizRepository.getQuiz(id);
+  const { slug } = context.query;
+
+  const quiz = await quizRepository.searchQuizBySlug(slug);
+
   if (!quiz) {
     console.log('Quiz não existe!!!');
     return {
-      props: { data: {}, results: {} },
+      props: { data: [], results: {}, title: '', color: '' },
     };
   }
 

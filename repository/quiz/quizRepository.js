@@ -2,7 +2,7 @@ import db from '../../repository';
 
 const ref = db().collection('quiz');
 
-const getQuiz = async (id) => {
+const getQuizById = async (id) => {
   const quiz = await ref.doc(id).get();
   let retQuiz;
   if (quiz.exists) {
@@ -24,4 +24,12 @@ const getQuiz = async (id) => {
   return retQuiz;
 };
 
-export default { getQuiz };
+const searchQuizBySlug = async (slug) => {
+  const quizList = await ref.where('slug', '==', slug).get();
+  let retQuiz;
+  if (quizList.docs.length > 0)
+    retQuiz = await getQuizById(quizList.docs[0].id);
+  return retQuiz;
+};
+
+export default { getQuizById, searchQuizBySlug };
