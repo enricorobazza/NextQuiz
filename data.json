@@ -1,0 +1,133 @@
+[
+  {
+    "question": "Desde o início da quarenta você:",
+    "answers": [
+      {
+        "text": "Fiquei preocupado com a situação e estou aguardando o desenrolar dos fatos",
+        "value": 0
+      },
+      {
+        "text": "Procurei me informar sobre a pandemia e estou decidindo o que fazer",
+        "value": 50
+      },
+      {
+        "text": "Procurei me informar e já tomei algumas decisões para minimizar os impactos",
+        "value": 100
+      }
+    ]
+  },
+  {
+    "question": "Sobre as ações trabalhistas implementadas pelos Governos:",
+    "answers": [
+      {
+        "text": "Ouvi algo a respeito, mas não sei exatamente do que se trata",
+        "value": 0
+      },
+      {
+        "text": "Tomei conhecimento das ações mas não sei como aproveitá-las",
+        "value": 50
+      },
+      {
+        "text": "Tomei conhecimento das ações e já estou utilizando os benefícios",
+        "value": 100
+      }
+    ]
+  },
+  {
+    "question": "Sobre as ações de crédito anunciadas pelos Governos:",
+    "answers": [
+      {
+        "text": "Ouvi algo a respeito, mas não sei exatamente do que se trata",
+        "value": 0
+      },
+      {
+        "text": "Tomei conhecimento das ações mas não sei como aproveitá-las",
+        "value": 50
+      },
+      {
+        "text": "Tomei conhecimento das ações e já estou acionando o que foi disponibilizado",
+        "value": 100
+      }
+    ]
+  },
+  {
+    "question": "Em relação aos custos da sua empresa, quando a quarentena começou, você:",
+    "answers": [
+      {
+        "text": "Não tomei nenhuma iniciativa específica",
+        "value": 0
+      },
+      {
+        "text": "Fiquei apreensivo, reduzi ou cancelei as compras junto a fornecedores",
+        "value": 50
+      },
+      {
+        "text": "Cancelei as compras, renegociei contratos e cortei custos.",
+        "value": 100
+      }
+    ]
+  },
+  {
+    "question": "Em relação às vendas durante a quarentena:",
+    "answers": [
+      {
+        "text": "Tive que fechar o negócio por decreto do governo e não tenho alternativa para vender.",
+        "value": 0
+      },
+      {
+        "text": "Tive que fechar o negócio por decreto do governo mas estou vendendo de outra forma",
+        "value": 50
+      },
+      {
+        "text": "Tive que fechar o negócio por decreto do governo mas implantei outro canal de venda.",
+        "value": 100
+      },
+      {
+        "text": "Não tive que fechar o negócio, mas as vendas/atendimento caíram muito neste período",
+        "value": 0
+      },
+      {
+        "text": "Não tive que fechar o negócio, mas estou estudando implantar outros canais de venda/atendimento",
+        "value": 50
+      },
+      {
+        "text": "Não tive que fechar o negócio, mas implantei outro canal de venda/atendimento",
+        "value": 100
+      }
+    ]
+  },
+  {
+    "question": "Assim que acabar a quarentena:",
+    "answers": [
+      {
+        "text": "Certamente estarei endividado e com risco de fechar as portas",
+        "value": 0
+      },
+      {
+        "text": "Estarei endividado, mas terei mantido parte dos clientes e funcionários",
+        "value": 50
+      },
+      {
+        "text": "Terei ampliado minhas alternativas de operação por outros canais e ações.",
+        "value": 100
+      }
+    ]
+  },
+  {
+    "question": "Após a quarentena você acredita que:",
+    "answers": [
+      {
+        "text": "O mercado estará ainda pior do que antes da crise",
+        "value": 0
+      },
+      {
+        "text": "O mercado não será o mesmo e a retomada será lenta",
+        "value": 50
+      },
+      {
+        "text": "O mercado estará mais agressivo mas terá boas oportunidades de atuação e crescimento",
+        "value": 100
+      }
+    ]
+  }
+]
