@@ -9,7 +9,18 @@ class CKEditorWrapper extends Component {
       <CKEditor
         editor={ClassicEditor}
         {...this.props}
-        config={{ width: '100%' }}
+        config={{
+          toolbar: [
+            'heading',
+            '|',
+            'bold',
+            'italic',
+            'link',
+            'bulletedList',
+            'numberedList',
+            'blockQuote',
+          ],
+        }}
       />
     );
   }
