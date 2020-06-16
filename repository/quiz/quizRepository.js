@@ -2,40 +2,27 @@ import db from '../../repository';
 
 const ref = db().collection('quiz');
 
-const getQuizById = async (id) => {
-  const quiz = await ref.doc(id).get();
-  let retQuiz;
-  if (quiz.exists) {
-    retQuiz = { ...quiz.data(), questions: [] };
-    const questions = await ref.doc(id).collection('questions').get();
-    const answersPromises = [];
-    questions.forEach((doc) => {
-      answersPromises.push(doc.ref.collection('answers').get());
-      retQuiz.questions.push(doc.data());
-    });
-    const answersResp = await Promise.all(answersPromises);
-    answersResp.forEach((answers, index) => {
-      retQuiz.questions[index].answers = [];
-      answers.forEach((answer) => {
-        retQuiz.questions[index].answers.push(answer.data());
-      });
-    });
-  }
-  return retQuiz;
-};
-
 const searchQuizBySlug = async (slug) => {
   const quizList = await ref.where('slug', '==', slug).get();
-  let retQuiz;
-  if (quizList.docs.length > 0)
-    retQuiz = await getQuizById(quizList.docs[0].id);
-  return retQuiz;
+  if (quizList.docs.length > 0) return quizList.docs[0].data();
+
+  return undefined;
 };
 
 const insertQuiz = async (quiz) => {
-  const newQuiz = ref.push();
-  newQuiz.set(quiz);
+  const newQuiz = await ref.add(quiz);
   return newQuiz.id;
 };
 
-export default { getQuizById, searchQuizBySlug, insertQuiz };
+const getAllSlugs = async () => {
+  const quizList = await ref.get();
+  if (quizList.docs.length === 0) return [];
+
+  const slugsList = quizList.docs.map((quiz) => {
+    return quiz.data().slug;
+  });
+
+  return slugsList;
+};
+
+export default { searchQuizBySlug, insertQuiz, getAllSlugs };

@@ -62,7 +62,7 @@ const QuestionForm = ({
                   onChange={(e) => {
                     const answersCopy =
                       answers === undefined ? [] : [...answers];
-                    answersCopy[index].value = e.target.value;
+                    answersCopy[index].value = parseInt(e.target.value);
                     setAnswers(answersCopy);
                   }}
                   type="number"

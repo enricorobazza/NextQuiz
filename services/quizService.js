@@ -1,7 +1,8 @@
-import quizRepository from '../repository/quiz/quizRepository';
+import axios from 'axios';
 
-const addQuiz = async (slug, title, color, answers, questions) => {
-  if (answers.length !== questions.length) return false;
+const addQuiz = async (slug, title, color, answers, questions, results) => {
+  if (answers.length !== questions.length)
+    return { success: false, data: 'Answers and questions dont match.' };
 
   let questionsCopy = [...questions];
 
@@ -9,8 +10,14 @@ const addQuiz = async (slug, title, color, answers, questions) => {
     return { question, answers: answers[index] };
   });
 
-  let quiz = { slug, title, color, questions: questionsCopy };
-  return await quizRepository.insertQuiz(quiz);
+  let quiz = { slug, title, color, questions: questionsCopy, results };
+
+  try {
+    const response = await axios.post('/api/quiz', { quiz });
+    return { success: true, data: response.data };
+  } catch (error) {
+    return { success: false, data: error.message };
+  }
 };
 
 export default { addQuiz };

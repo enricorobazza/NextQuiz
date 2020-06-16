@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { BlockPicker } from 'react-color';
 
 const QuizForm = ({
-  colorState,
-  questionCountState,
-  slugState,
-  titleState,
+  colorState: { color, setColor },
+  questionCountState: { questionCount, setQuestionCount },
+  slugState: { slug, setSlug },
+  titleState: { title, setTitle },
+  slugInUseState: { slugInUse, setSlugInUse },
 }) => {
   return (
     <form
@@ -18,20 +19,24 @@ const QuizForm = ({
         <div className="form-group col-12">
           <label htmlFor="slug">Slug:</label>
           <input
-            value={slugState.slug}
+            value={slug}
             placeholder="meu-questionario"
             name="slug"
-            className="form-control"
+            className={`form-control ${slugInUse ? 'border-danger' : ''}`}
             onChange={(e) => {
               const slug = e.target.value
                 .replace(' ', '')
                 .normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
                 .toLowerCase();
-              console.log(slug);
-              slugState.setSlug(slug);
+              setSlug(slug);
             }}
           ></input>
+          {slugInUse && (
+            <div className="alert alert-danger mt-2" role="alert">
+              Este slug já está sendo utilizado.
+            </div>
+          )}
           <div className="alert alert-secondary mt-2" role="alert">
             Um identificador único pro seu questionário. Não pode conter acentos
             ou espaços.
@@ -42,11 +47,11 @@ const QuizForm = ({
         <div className="form-group col-12">
           <label htmlFor="title">Título:</label>
           <input
-            value={titleState.title}
+            value={title}
             placeholder="Qual será sua idade?"
             name="title"
             className="form-control"
-            onChange={(e) => titleState.setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
           ></input>
         </div>
       </div>
@@ -54,10 +59,8 @@ const QuizForm = ({
         <div className="form-group col-12">
           <label htmlFor="count">Quantidade de perguntas:</label>
           <input
-            value={questionCountState.questionCount}
-            onChange={(e) =>
-              questionCountState.setQuestionCount(e.target.value)
-            }
+            value={questionCount}
+            onChange={(e) => setQuestionCount(e.target.value)}
             name="count"
             type="number"
             className="form-control"
@@ -69,9 +72,9 @@ const QuizForm = ({
           <label htmlFor="color">Cor de Fundo:</label>
           <BlockPicker
             className="mt-2"
-            color={colorState.color}
+            color={color}
             onChangeComplete={(color) => {
-              colorState.setColor(color.hex);
+              setColor(color.hex);
             }}
           />
         </div>

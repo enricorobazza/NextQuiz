@@ -48,32 +48,30 @@ const Quiz = ({ data, results, color, title }) => {
     setValue(answers[currentQuestion] || -1);
   }, [currentQuestion]);
 
-  const setCurrentAnswer = () => {
-    let newAnswers = [...answers];
-    newAnswers[currentQuestion] = value;
-    setAnswers(newAnswers);
-  };
-
-  const getFinalValue = () => {
+  const getFinalValue = (answers) => {
     let sum = 0;
     data.forEach((question, index) => {
-      if (answers[index] && answers[index] >= 0)
-        sum += question.answers[answers[index]].value;
+      if (answers[index] && answers[index] >= 0) {
+        sum += parseInt(question.answers[answers[index]].value);
+      }
     });
     return sum;
   };
 
-  const handleChange = (value) => {
-    setCurrentAnswer();
-    if (value >= data.length) {
-      console.log(answers);
-      const media = getFinalValue() / data.length;
-      if (media < 36) setResult(results[0]);
-      else if (media < 71) setResult(results[1]);
-      else setResult(results[2]);
+  const handleChange = async (to) => {
+    let newAnswers = [...answers];
+    newAnswers[currentQuestion] = value;
+    setAnswers(newAnswers);
+
+    if (to >= data.length) {
+      const media = getFinalValue(newAnswers) / data.length;
+      results.forEach((result) => {
+        if (media >= parseInt(result.from) && media < parseInt(result.to))
+          setResult(result.text);
+      });
       return;
     }
-    setCurrentQuestion(value);
+    setCurrentQuestion(to);
   };
 
   return (

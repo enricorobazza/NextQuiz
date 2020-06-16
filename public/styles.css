@@ -7,3 +7,11 @@ hr {
   margin: 20px 0;
   border-top: 1px solid rgba(160, 160, 160, 0.2);
 }
+
+.ck.ck-editor {
+  width: 100% !important;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
