@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Bootstrap = (
+const Bootstrap = () => (
   <link
     rel="stylesheet"
     href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"

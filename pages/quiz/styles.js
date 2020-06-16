@@ -19,21 +19,6 @@ export const Button = withStyles({
   },
 })(MUIButton);
 
-export const Card = withStyles({
-  root: {
-    padding: 60,
-    width: '50%',
-    display: 'inline-block',
-  },
-})(MUICard);
-
-export const CardTitle = withStyles({
-  root: {
-    fontSize: '24px',
-    fontWeight: 300,
-  },
-})(Typography);
-
 export const QuestionTitle = withStyles({
   root: {
     fontSize: '17px',
@@ -53,13 +38,4 @@ export const CardFooter = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-`;
-
-export const Background = styled.div`
-  background-color: ${(props) => props.color || blue[300]};
-  width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

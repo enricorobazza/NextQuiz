@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Router from 'next/router';
 import {
-  // Card,
   CardContent,
   Typography,
   Box,
@@ -14,17 +14,9 @@ import { withTheme } from '@material-ui/core/styles';
 import { blue } from '@material-ui/core/colors';
 import Head from 'next/head';
 import { Pagination } from '@material-ui/lab';
-import {
-  Button,
-  Background,
-  Card,
-  CardTitle,
-  CardFooter,
-  CardActions,
-  QuestionTitle,
-} from './styles';
-// import dataJSON from '../../data.json';
-// import resultsJSON from '../../results.json';
+import { Button, CardFooter, CardActions, QuestionTitle } from './styles';
+
+import { Background, Card, CardTitle } from '../../components/styles';
 
 import quizRepository from '../../repository/quiz/quizRepository';
 
@@ -47,6 +39,10 @@ const Quiz = ({ data, results, color, title }) => {
   const [value, setValue] = useState(-1);
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(false);
+
+  if (!data || !results || !color || !title) {
+    return <></>;
+  }
 
   useEffect(() => {
     setValue(answers[currentQuestion] || -1);
@@ -83,7 +79,8 @@ const Quiz = ({ data, results, color, title }) => {
   return (
     <>
       <Head>
-        <link rel="stylesheet" href="/pages/quiz/styles.css" />
+        <link rel="stylesheet" href="/styles.css" />
+        <title>{`Next Quiz | ${title}`}</title>
       </Head>
       <Background color={color}>
         <Card className="card">
@@ -159,9 +156,9 @@ export async function getServerSideProps(context) {
 
   if (!quiz) {
     console.log('Quiz não existe!!!');
-    return {
-      props: { data: [], results: {}, title: '', color: '' },
-    };
+    context.res.statusCode = 302;
+    context.res.setHeader('Location', '/');
+    return { props: {} };
   }
 
   let shuffledData = [...quiz.questions];
