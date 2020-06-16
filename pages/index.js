@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { blue } from '@material-ui/core/colors';
 import QuizForm from './home/QuizForm';
 import QuestionForm from './home/QuestionForm';
+import QuizService from '../services/quizService';
 
 const Index = () => {
   const [color, setColor] = useState(blue[300]);
@@ -14,9 +15,7 @@ const Index = () => {
   const [title, setTitle] = useState('');
   const [answers, _setAnswers] = useState([[{ text: '', value: 0 }]]);
   const [questions, setQuestions] = useState(['']);
-  const [correctAnswers, setCorrectAnswers] = useState([]);
   const [answerCountError, setAnswerCountError] = useState(false);
-  const [correctAnswerError, setCorrectAnswerError] = useState(false);
 
   const setAnswers = (newAnswers) => {
     const answersCopy = [...answers];
@@ -30,25 +29,16 @@ const Index = () => {
     setQuestions(questionsCopy);
   };
 
-  const setCorrectAnswer = (correctAnswer) => {
-    const correctAnswersCopy = [...correctAnswers];
-    correctAnswersCopy[step - 1] = correctAnswer;
-    setCorrectAnswers(correctAnswersCopy);
-  };
-
   const setQuestionCount = (questionCount) => {
     if (questionCount > answers.length) {
       const answersCopy = [...answers];
-      const correctAnswersCopy = [...correctAnswers];
       const questionsCopy = [...questions];
       let x;
       for (x = answers.length; x < questionCount; x += 1) {
         answersCopy.push([{ text: '', value: 0 }]);
-        correctAnswersCopy.push(-1);
         questionsCopy.push('');
       }
       _setAnswers(answersCopy);
-      setCorrectAnswers(correctAnswersCopy);
       setQuestions(questionsCopy);
     }
     _setQuestionCount(questionCount);
@@ -91,17 +81,9 @@ const Index = () => {
                 <QuestionForm
                   answersState={{ answers: answers[step - 1], setAnswers }}
                   questionState={{ question: questions[step - 1], setQuestion }}
-                  correctAnswerState={{
-                    correctAnswer: correctAnswers[step - 1],
-                    setCorrectAnswer,
-                  }}
                   answerCountErrorState={{
                     answerCountError,
                     setAnswerCountError,
-                  }}
-                  correctAnswerErrorState={{
-                    correctAnswerError,
-                    setCorrectAnswerError,
                   }}
                 />
               )}
@@ -118,11 +100,6 @@ const Index = () => {
                         answers[step - 1].length === 0
                       ) {
                         setAnswerCountError(true);
-                      } else if (
-                        correctAnswers[step - 1] === undefined ||
-                        correctAnswers[step - 1] < 0
-                      ) {
-                        setCorrectAnswerError(true);
                       } else setStep(step - 1);
                     }}
                   >
@@ -133,7 +110,7 @@ const Index = () => {
                   type="button"
                   style={{ backgroundColor: color, color: 'white', flex: 1 }}
                   className="btn col-12 mt-2"
-                  onClick={(e) => {
+                  onClick={async (e) => {
                     e.preventDefault();
                     if (
                       step > 0 &&
@@ -141,15 +118,18 @@ const Index = () => {
                         answers[step - 1].length === 0)
                     ) {
                       setAnswerCountError(true);
-                    } else if (
-                      step > 0 &&
-                      (correctAnswers[step - 1] === undefined ||
-                        correctAnswers[step - 1] < 0)
-                    ) {
-                      setCorrectAnswerError(true);
                     } else if (step < questionCount) {
                       setStep(step + 1);
-                    } else alert('FIM!!!');
+                    } else {
+                      const response = await QuizService.addQuiz(
+                        slug,
+                        title,
+                        color,
+                        answers,
+                        questions
+                      );
+                      console.log(response);
+                    }
                   }}
                 >
                   Próxima

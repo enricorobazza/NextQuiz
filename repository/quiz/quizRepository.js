@@ -32,4 +32,10 @@ const searchQuizBySlug = async (slug) => {
   return retQuiz;
 };
 
-export default { getQuizById, searchQuizBySlug };
+const insertQuiz = async (quiz) => {
+  const newQuiz = ref.push();
+  newQuiz.set(quiz);
+  return newQuiz.id;
+};
+
+export default { getQuizById, searchQuizBySlug, insertQuiz };
